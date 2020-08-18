@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go_hpa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: go_hpa
+  template:
+    metadata:
+      labels:
+        app: go_hpa
+    spec:
+      containers:
+        - name: go
+          image: yurikoster1/hello_go
+          ports:
+            - containerPort: 8000
+          resources:
+            requests:
+              cpu: "50m"
+            limits:
+              cpu: "100m"

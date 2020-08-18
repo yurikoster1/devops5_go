@@ -1,0 +1,50 @@
+version: "3.7"
+services:
+
+  #GO
+  devops_5_app:
+    build:
+      context: .
+      dockerfile: ./.docker/go/Dockerfile
+      target: prod
+    image: yurikoster1/go-hpa
+    networks:
+      - devops_5_app-network
+    container_name: go_5_app
+    ports:
+      - "8000:8000"
+    labels:
+      yuri.project.name: ${COMPOSE_PROJECT_NAME}
+#GO
+  devops_5_getter:
+    build:
+      context: ./.docker/busybox
+      dockerfile: Dockerfile
+    image: yurikoster1/hpa_getter
+    depends_on:
+      - "devops_5_app"
+    networks:
+      - devops_5_app-network
+    container_name: busybox_5_app
+    environment:
+      - GO_SERVICE_URL=devops_5_app
+      - GO_SERVICE_PORT=8000
+    labels:
+      yuri.project.name: ${COMPOSE_PROJECT_NAME}
+
+
+networks:
+  devops_5_app-network:
+    driver: bridge
+    labels:
+     yuri.project.name: ${COMPOSE_PROJECT_NAME}
+
+volumes:
+  devops_5_dbdata:
+    driver: local
+    driver_opts:
+        type: none
+        o: bind
+        device: "${PWD}/.docker/mysql/data"
+    labels:
+      yuri.project.name: ${COMPOSE_PROJECT_NAME}
