@@ -1,3 +1,3 @@
-devops4_go
+devops5_go
 
-Docker Hub Image: https://hub.docker.com/r/yurikoster1/hello_go
+Docker Hub Image: https://hub.docker.com/r/yurikoster1/go-hpa
