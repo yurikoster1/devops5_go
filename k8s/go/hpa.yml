@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: go_hpa
+  name: go-hpa
 
 spec:
   maxReplicas: 6
@@ -9,5 +9,5 @@ spec:
   scaleTargetRef:
     apiVersion: extensions/v1beta1
     kind: Deployment
-    name: go_hpa
+    name: go-hpa
   targetCPUUtilizationPercentage: 15
